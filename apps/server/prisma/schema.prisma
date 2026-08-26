@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id         String   @id @default(cuid())
+  name       String
+  inviteCode String   @unique
+  createdAt  DateTime @default(now())
+
+  users      User[]
+  regions    Region[]
+  branches   Branch[]
+  eventTypes EventType[]
+  programs   Program[]
+  events     EventLog[]
+}
+
+model User {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  email          String       @unique
+  passwordHash   String
+  name           String
+  role           String
+  createdAt      DateTime     @default(now())
+
+  loggedEvents   EventLog[]
+  createdPrograms Program[]
+}
+
+model Region {
+  id             String   @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  name           String
+
+  branches Branch[]
+}
+
+model Branch {
+  id             String   @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  regionId       String
+  region         Region   @relation(fields: [regionId], references: [id])
+  name           String
+
+  events EventLog[]
+}
+
+model EventType {
+  id             String   @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  name           String
+
+  events EventLog[]
+}
+
+model Program {
+  id              String   @id @default(cuid())
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  name            String
+  description     String?
+  createdByUserId String
+  createdBy       User     @relation(fields: [createdByUserId], references: [id])
+  createdAt       DateTime @default(now())
+
+  events EventLog[]
+}
+
+model EventLog {
+  id              String       @id @default(cuid())
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  branchId        String
+  branch          Branch       @relation(fields: [branchId], references: [id])
+  eventTypeId     String
+  eventType       EventType    @relation(fields: [eventTypeId], references: [id])
+  programId       String?
+  program         Program?     @relation(fields: [programId], references: [id])
+  title           String
+  date            DateTime
+  attendeeCount   Int?
+  notes           String?
+  createdByUserId String
+  createdBy       User         @relation(fields: [createdByUserId], references: [id])
+  createdAt       DateTime     @default(now())
+}

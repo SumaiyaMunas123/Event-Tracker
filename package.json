@@ -1,0 +1,17 @@
+{
+  "name": "event-tracker",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace apps/server\" \"npm run dev --workspace apps/web\"",
+    "build": "npm run build --workspace apps/server && npm run build --workspace apps/web",
+    "dev:server": "npm run dev --workspace apps/server",
+    "dev:web": "npm run dev --workspace apps/web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

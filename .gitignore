@@ -1,0 +1,10 @@
+node_modules/
+apps/server/node_modules/
+apps/web/node_modules/
+apps/server/prisma/dev.db
+apps/server/prisma/dev.db-journal
+.env
+apps/server/.env
+apps/web/dist/
+apps/server/dist/
+.DS_Store
