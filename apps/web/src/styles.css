@@ -1,18 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --navy: #1D3262;
-  --blue: #006CA1;
-  --crimson: #8F1D38;
-  --orange: #D16223;
-  --teal: #0E5E58;
-  --gold: #ECA017;
+  --ink: #22352C;
+  --mint: #D1ECE7;
+  --yellow: #FEE16C;
+  --amber: #BD7F01;
+  --burnt: #A23D01;
   --white: #FFFFFF;
-  --text: #1d2a3a;
-  --muted: #5b6474;
-  --panel: #f4f7fb;
-  --line: rgba(29, 50, 98, 0.12);
-  --shadow: 0 12px 32px rgba(29, 50, 98, 0.08);
+  --text: #22352C;
+  --muted: #4d5d56;
+  --panel: #f9fbfa;
+  --line: rgba(34, 53, 44, 0.12);
+  --shadow: 0 12px 30px rgba(34, 53, 44, 0.08);
   --radius: 18px;
   font-family: 'Inter', 'Segoe UI', sans-serif;
   line-height: 1.5;
@@ -29,7 +28,7 @@
 html, body, #root { margin: 0; min-height: 100%; }
 body {
   min-height: 100vh;
-  background: linear-gradient(180deg, #ffffff 0%, #eef4fb 100%);
+  background: linear-gradient(180deg, #ffffff 0%, var(--mint) 100%);
 }
 a { text-decoration: none; color: inherit; }
 button, input { font: inherit; }
@@ -43,9 +42,9 @@ button, input { font: inherit; }
   align-items: center;
   justify-content: space-between;
   padding: 0.85rem 1.5rem;
-  background: linear-gradient(135deg, var(--navy) 0%, #24457f 100%);
+  background: linear-gradient(135deg, var(--ink) 0%, var(--burnt) 100%);
   color: var(--white);
-  box-shadow: 0 8px 20px rgba(29, 50, 98, 0.16);
+  box-shadow: 0 8px 20px rgba(34, 53, 44, 0.16);
 }
 
 .brand-block {
@@ -110,7 +109,7 @@ button, input { font: inherit; }
 
 .eyebrow {
   margin: 0 0 0.35rem;
-  color: var(--blue);
+  color: var(--amber);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.72rem;
@@ -121,7 +120,7 @@ h1, h2, h3, p { margin-top: 0; }
 h1 {
   font-size: clamp(2rem, 3vw, 3rem);
   margin-bottom: 0;
-  color: var(--navy);
+  color: var(--ink);
   letter-spacing: -0.03em;
 }
 
@@ -137,15 +136,15 @@ h1 {
 }
 
 .primary-button {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%);
-  color: var(--white);
-  box-shadow: 0 10px 22px rgba(0, 108, 161, 0.22);
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--amber) 55%, var(--burnt) 100%);
+  color: var(--ink);
+  box-shadow: 0 10px 22px rgba(190, 127, 1, 0.18);
 }
 
 .secondary-button {
-  background: rgba(29, 50, 98, 0.06);
-  border: 1px solid rgba(29, 50, 98, 0.12);
-  color: var(--navy);
+  background: rgba(209, 236, 231, 0.6);
+  border: 1px solid rgba(34, 53, 44, 0.12);
+  color: var(--ink);
 }
 
 .small-button {
@@ -164,12 +163,12 @@ h1 {
   justify-content: space-between;
   gap: 1rem;
   padding: 2rem 1.75rem;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 42%, var(--crimson) 100%);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--mint) 0%, var(--yellow) 40%, var(--amber) 100%);
+  color: var(--ink);
 }
 
 .hero-copy h1 {
-  color: var(--white);
+  color: var(--ink);
   line-height: 1.04;
   margin-bottom: 0.4rem;
 }
@@ -177,7 +176,7 @@ h1 {
 .hero-subtitle {
   margin: 0;
   max-width: 620px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(34, 53, 44, 0.8);
 }
 
 .hero-badge-wrap {
@@ -187,8 +186,8 @@ h1 {
   width: 120px;
   height: 120px;
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(34, 53, 44, 0.15);
   backdrop-filter: blur(5px);
 }
 
@@ -198,8 +197,8 @@ h1 {
   width: 76px;
   height: 76px;
   border-radius: 24px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.2));
-  color: var(--navy);
+  background: linear-gradient(135deg, var(--yellow), var(--mint));
+  color: var(--ink);
   font-size: 1.7rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -223,7 +222,7 @@ h1 {
 .panel-title-link,
 .panel-head h2 {
   font-size: 1.1rem;
-  color: var(--navy);
+  color: var(--ink);
   margin: 0;
 }
 
@@ -254,19 +253,19 @@ h1 {
   min-height: 52px;
   border-radius: 0.8rem;
   background: #ffffff;
-  border: 1px solid rgba(29, 50, 98, 0.08);
+  border: 1px solid rgba(66, 23, 35, 0.08);
   color: var(--text);
   font-weight: 600;
 }
 
 .calendar-cell.is-event {
-  background: rgba(0, 108, 161, 0.12);
-  color: var(--blue);
-  border-color: rgba(0, 108, 161, 0.2);
+  background: rgba(254, 225, 108, 0.35);
+  color: var(--amber);
+  border-color: rgba(189, 127, 1, 0.28);
 }
 
 .calendar-cell.selected {
-  background: linear-gradient(135deg, var(--navy), var(--blue));
+  background: linear-gradient(135deg, var(--ink), var(--burnt));
   color: var(--white);
   border-color: transparent;
 }
@@ -311,8 +310,8 @@ h1 {
   margin-top: 0.2rem;
 }
 
-.list-tag.navy { background: rgba(29, 50, 98, 0.1); color: var(--navy); }
-.list-tag.blue { background: rgba(0, 108, 161, 0.12); color: var(--blue); }
+.list-tag.navy { background: rgba(34, 53, 44, 0.1); color: var(--ink); }
+.list-tag.blue { background: rgba(254, 225, 108, 0.4); color: var(--amber); }
 
 .compact-list li {
   padding: 0.7rem;
@@ -373,9 +372,9 @@ h1 {
   font-weight: 700;
 }
 
-.status-badge.done { background: rgba(14, 94, 88, 0.12); color: var(--teal); }
-.status-badge.pending { background: rgba(209, 98, 35, 0.12); color: var(--orange); }
-.status-badge.scheduled { background: rgba(0, 108, 161, 0.12); color: var(--blue); }
+.status-badge.done { background: rgba(209, 236, 231, 0.95); color: var(--ink); }
+.status-badge.pending { background: rgba(162, 61, 1, 0.12); color: var(--burnt); }
+.status-badge.scheduled { background: rgba(254, 225, 108, 0.5); color: var(--amber); }
 
 .program-item h2 {
   margin: 0.8rem 0 0.3rem;
@@ -404,10 +403,10 @@ h1 {
   padding: 1rem 1.1rem;
 }
 
-.detail-card-primary { background: linear-gradient(135deg, rgba(143, 29, 56, 0.1), rgba(209, 98, 35, 0.06)); }
-.detail-card-blue { background: linear-gradient(135deg, rgba(0, 108, 161, 0.1), rgba(29, 50, 98, 0.04)); }
-.detail-card-teal { background: linear-gradient(135deg, rgba(14, 94, 88, 0.12), rgba(14, 94, 88, 0.03)); }
-.detail-card-gold { background: linear-gradient(135deg, rgba(236, 160, 23, 0.14), rgba(236, 160, 23, 0.04)); }
+.detail-card-primary { background: linear-gradient(135deg, rgba(34, 53, 44, 0.08), rgba(209, 236, 231, 0.7)); }
+.detail-card-blue { background: linear-gradient(135deg, rgba(254, 225, 108, 0.28), rgba(189, 127, 1, 0.12)); }
+.detail-card-teal { background: linear-gradient(135deg, rgba(209, 236, 231, 0.8), rgba(255, 255, 255, 0.55)); }
+.detail-card-gold { background: linear-gradient(135deg, rgba(189, 127, 1, 0.12), rgba(162, 61, 1, 0.08)); }
 
 .card-label {
   display: block;
@@ -442,7 +441,7 @@ h1 {
   margin-top: 1.5rem;
   padding: 1rem 1.2rem;
   border-radius: 1rem;
-  background: linear-gradient(135deg, rgba(29, 50, 98, 0.06), rgba(0, 108, 161, 0.06));
+  background: linear-gradient(135deg, rgba(209, 236, 231, 0.8), rgba(254, 225, 108, 0.25));
   border: 1px solid var(--line);
 }
 
@@ -470,7 +469,7 @@ h1 {
 }
 
 .auth-side-panel {
-  background: linear-gradient(180deg, rgba(29, 50, 98, 0.04), rgba(0, 108, 161, 0.04));
+  background: linear-gradient(180deg, rgba(209, 236, 231, 0.65), rgba(254, 225, 108, 0.25));
 }
 
 .auth-side-panel h2 {
@@ -504,7 +503,7 @@ h1 {
 }
 
 .stack-form input:focus {
-  outline: 2px solid rgba(0, 108, 161, 0.22);
+  outline: 2px solid rgba(199, 68, 74, 0.2);
   border-color: var(--blue);
 }
 
@@ -533,18 +532,18 @@ h1 {
   border-radius: 999px;
   font-size: 0.76rem;
   font-weight: 800;
-  background: rgba(0, 108, 161, 0.12);
-  color: var(--blue);
+  background: rgba(254, 225, 108, 0.4);
+  color: var(--amber);
 }
 
 .event-badge.alt {
-  background: rgba(14, 94, 88, 0.12);
-  color: var(--teal);
+  background: rgba(209, 236, 231, 0.7);
+  color: var(--ink);
 }
 
 .site-footer {
   padding: 1.2rem 1rem 2.5rem;
-  background: #f1f5f9;
+  background: linear-gradient(180deg, var(--mint), var(--white));
   border-top: 1px solid var(--line);
 }
 
