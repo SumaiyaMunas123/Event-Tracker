@@ -1,5 +1,34 @@
 import { Link, Navigate, Route, Routes } from 'react-router-dom';
 
+const organizationMeta = {
+  name: 'North Region Network',
+  inviteCode: 'ORG-AB12CD',
+  regions: ['North', 'Central', 'Coastal', 'Western'],
+  branches: ['Aster Branch', 'Harbor Branch', 'Summit Branch', 'Ridge Branch'],
+};
+
+const calendarDays = [
+  'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',
+  null, null, null, 1, 2, 3, 4,
+  5, 6, 7, 8, 9, 10, 11,
+  12, 13, 14, 15, 16, 17, 18,
+  19, 20, 21, 22, 23, 24, 25,
+  26, 27, 28, 29, 30, 31, null,
+];
+
+const recentPrograms = [
+  { name: 'Workshop 1: Planning Session', region: 'North', status: 'Completed' },
+  { name: 'Community Outreach', region: 'Central', status: 'Pending' },
+  { name: 'Leadership Briefing', region: 'Coastal', status: 'Completed' },
+  { name: 'Volunteer Check-in', region: 'Western', status: 'Scheduled' },
+];
+
+const upcomingPrograms = [
+  { name: 'Regional Review Meeting', date: 'Wed, 27 Aug', region: 'North' },
+  { name: 'Member Onboarding Session', date: 'Fri, 29 Aug', region: 'Central' },
+  { name: 'Quarterly Briefing', date: 'Mon, 1 Sep', region: 'All regions' },
+];
+
 function App() {
   return (
     <div className="app-shell">
@@ -10,10 +39,9 @@ function App() {
         <nav className="topnav" aria-label="Main navigation">
           <Link to="/">Dashboard</Link>
           <Link to="/organization">Organization</Link>
-          <Link to="/signup">Signup</Link>
-          <Link to="/join">Join Organization</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/admin">Admin</Link>
+          <Link to="/calendar">Calendar</Link>
+          <Link to="/programs">Programs</Link>
+          <Link to="/auth">Account</Link>
         </nav>
       </header>
 
@@ -21,15 +49,26 @@ function App() {
         <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/organization" element={<OrganizationDetailsPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/join" element={<JoinOrgPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/admin" element={<AdminSettingsPage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
+          <Route path="/programs" element={<ProgramsPage />} />
+          <Route path="/auth" element={<AuthPage />} />
           <Route path="/regions/:id" element={<RegionPage />} />
           <Route path="/branches/:id" element={<BranchPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+
+      <footer className="site-footer">
+        <div className="footer-links">
+          <Link to="/">Dashboard</Link>
+          <Link to="/organization">Organization</Link>
+          <Link to="/calendar">Calendar</Link>
+          <Link to="/programs">Programs</Link>
+          <Link to="/auth">Account</Link>
+          <Link to="/regions/north">Regions</Link>
+          <Link to="/branches/aster">Branches</Link>
+        </div>
+      </footer>
     </div>
   );
 }
@@ -37,91 +76,129 @@ function App() {
 function DashboardPage() {
   return (
     <section className="panel dashboard-panel">
-      <div className="hero-bar">
+      <div className="dashboard-hero">
+        <div className="hero-copy">
+          <p className="eyebrow">Active organization</p>
+          <h1>{organizationMeta.name}</h1>
+          <p className="hero-subtitle">Program visibility and branch activity across all regions.</p>
+        </div>
+        <div className="hero-badge-wrap" aria-label="Organization emblem">
+          <div className="hero-badge">NRN</div>
+        </div>
+      </div>
+
+      <div className="dashboard-layout">
+        <div className="calendar-panel card-panel">
+          <div className="panel-head">
+            <Link to="/calendar" className="panel-title-link">Calendar</Link>
+            <button className="primary-button small-button" type="button">+ Add Program</button>
+          </div>
+
+          <div className="calendar-grid" aria-label="August calendar">
+            {calendarDays.map((day, index) => (
+              <div key={`day-${index}`} className={`calendar-cell ${day === 14 || day === 20 || day === 28 ? 'is-event' : ''} ${day === 14 ? 'selected' : ''}`}>
+                {day ?? ''}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="side-stack">
+          <div className="card-panel">
+            <div className="panel-head">
+              <Link to="/programs" className="panel-title-link">Recent Programs</Link>
+              <button className="secondary-button small-button" type="button">+ Add Program</button>
+            </div>
+            <ul className="list-stack">
+              {recentPrograms.map((program) => (
+                <li key={program.name}>
+                  <div className="list-tag navy">{program.region}</div>
+                  <div>
+                    <strong>{program.name}</strong>
+                    <small>{program.status}</small>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="card-panel">
+            <div className="panel-head">
+              <h2>Upcoming Programs</h2>
+            </div>
+            <ul className="list-stack compact-list">
+              {upcomingPrograms.map((program) => (
+                <li key={program.name}>
+                  <div className="list-tag blue">{program.region}</div>
+                  <div>
+                    <strong>{program.name}</strong>
+                    <small>{program.date}</small>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CalendarPage() {
+  return (
+    <section className="panel">
+      <div className="section-header">
         <div>
-          <p className="eyebrow">Overview</p>
-          <h1>Organization dashboard</h1>
+          <p className="eyebrow">Calendar</p>
+          <h1>Program calendar</h1>
         </div>
-        <div className="hero-actions">
-          <button className="secondary-button" type="button">View calendar</button>
-          <button className="primary-button" type="button">+ Log Event</button>
-        </div>
+        <button className="primary-button" type="button">+ Add Program</button>
       </div>
 
-      <div className="stats-grid">
-        <div className="stat-tile accent-navy">
-          <span>Upcoming</span>
-          <strong>18</strong>
-          <small>Sessions this month</small>
-        </div>
-        <div className="stat-tile accent-blue">
-          <span>Regions</span>
-          <strong>5</strong>
-          <small>Across the network</small>
-        </div>
-        <div className="stat-tile accent-teal">
-          <span>Programs</span>
-          <strong>9</strong>
-          <small>Recurring initiatives</small>
-        </div>
-        <div className="stat-tile accent-gold">
-          <span>Completion</span>
-          <strong>76%</strong>
-          <small>Program coverage</small>
-        </div>
-      </div>
-
-      <div className="dashboard-grid">
-        <div className="calendar-card">
-          <div className="card-heading-row">
-            <h2>Recent calendar</h2>
-            <span className="pill pill-blue">Updated today</span>
+      <div className="calendar-full card-panel">
+        <div className="calendar-month-header">
+          <span>August 2026</span>
+          <div className="month-controls">
+            <button type="button">◀</button>
+            <button type="button">▶</button>
           </div>
-          <div className="calendar-placeholder">Calendar view placeholder</div>
         </div>
-
-        <div className="mini-panel focus-panel">
-          <div className="card-heading-row">
-            <h2>Priority programs</h2>
-            <span className="pill pill-gold">Live</span>
-          </div>
-          <ul className="priority-list">
-            <li>
-              <span className="list-tag navy">North</span>
-              <div>
-                <strong>Workshop 1: Planning Session</strong>
-                <small>3 regions complete</small>
-              </div>
-            </li>
-            <li>
-              <span className="list-tag blue">Central</span>
-              <div>
-                <strong>Community Outreach</strong>
-                <small>2 regions still pending</small>
-              </div>
-            </li>
-            <li>
-              <span className="list-tag teal">Coastal</span>
-              <div>
-                <strong>Leadership Briefing</strong>
-                <small>All regions logged</small>
-              </div>
-            </li>
-          </ul>
+        <div className="calendar-grid large" aria-label="Full month calendar">
+          {calendarDays.map((day, index) => (
+            <div key={`full-day-${index}`} className={`calendar-cell ${day === 14 || day === 20 || day === 28 ? 'is-event' : ''} ${day === 20 ? 'selected' : ''}`}>
+              {day ?? ''}
+            </div>
+          ))}
         </div>
       </div>
+    </section>
+  );
+}
 
-      <div className="program-section">
-        <div className="card-heading-row">
-          <h2>Program coverage</h2>
-          <span className="pill pill-red">Leadership view</span>
+function ProgramsPage() {
+  return (
+    <section className="panel">
+      <div className="section-header">
+        <div>
+          <p className="eyebrow">Programs</p>
+          <h1>Recent programs</h1>
         </div>
-        <div className="program-tabs">
-          <button className="tab active" type="button">Workshop 1: Planning Session</button>
-          <button className="tab" type="button">Community Outreach</button>
-          <button className="tab" type="button">Leadership Briefing</button>
-          <button className="tab" type="button">Volunteer Check-in</button>
-        </div>
+        <button className="primary-button" type="button">+ Add Program</button>
+      </div>
+
+      <div className="program-list">
+        {recentPrograms.map((program) => (
+          <article key={program.name} className="program-item">
+            <div className="program-meta">
+              <span className="list-tag navy">{program.region}</span>
+              <span className={`status-badge ${program.status === 'Completed' ? 'done' : program.status === 'Pending' ? 'pending' : 'scheduled'}`}>
+                {program.status}
+              </span>
+            </div>
+            <h2>{program.name}</h2>
+            <p>Event details and branch progress across the organization.</p>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -140,11 +217,11 @@ function OrganizationDetailsPage() {
       <div className="organization-grid">
         <div className="detail-card detail-card-primary">
           <span className="card-label">Organization name</span>
-          <h2>North Region Network</h2>
+          <h2>{organizationMeta.name}</h2>
         </div>
         <div className="detail-card detail-card-blue">
           <span className="card-label">Invite code</span>
-          <h2>ORG-AB12CD</h2>
+          <h2>{organizationMeta.inviteCode}</h2>
         </div>
         <div className="detail-card detail-card-teal">
           <span className="card-label">Members</span>
@@ -152,140 +229,86 @@ function OrganizationDetailsPage() {
         </div>
         <div className="detail-card detail-card-gold">
           <span className="card-label">Regions</span>
-          <h2>5 tracked</h2>
+          <h2>{organizationMeta.regions.length} tracked</h2>
         </div>
       </div>
 
       <div className="info-grid">
         <div className="mini-panel">
-          <h2>Leadership summary</h2>
+          <div className="mini-head">
+            <h2>Regions</h2>
+            <button className="secondary-button small-button" type="button">+ Add</button>
+          </div>
           <ul>
-            <li>4 active regional teams</li>
-            <li>9 recurring programs</li>
-            <li>Leadership can verify completion status by region</li>
+            {organizationMeta.regions.map((region) => (
+              <li key={region}>{region}</li>
+            ))}
           </ul>
         </div>
+
         <div className="mini-panel">
-          <h2>Operational notes</h2>
+          <div className="mini-head">
+            <h2>Branches</h2>
+            <button className="secondary-button small-button" type="button">+ Add</button>
+          </div>
           <ul>
-            <li>Last update: 2 hours ago</li>
-            <li>Next reporting cycle: Friday</li>
-            <li>Admin actions available for configuration</li>
+            {organizationMeta.branches.map((branch) => (
+              <li key={branch}>{branch}</li>
+            ))}
           </ul>
         </div>
       </div>
-    </section>
-  );
-}
 
-function SignupPage() {
-  return (
-    <section className="panel form-panel">
-      <h1>Create organization</h1>
-      <form className="stack-form">
-        <label>
-          Your name
-          <input type="text" placeholder="Ada Johnson" />
-        </label>
-        <label>
-          Email
-          <input type="email" placeholder="ada@org.example" />
-        </label>
-        <label>
-          Password
-          <input type="password" placeholder="••••••••" />
-        </label>
-        <label>
-          Organization name
-          <input type="text" placeholder="North Region Network" />
-        </label>
-        <button className="primary-button" type="submit">Create organization</button>
-      </form>
-    </section>
-  );
-}
-
-function JoinOrgPage() {
-  return (
-    <section className="panel form-panel">
-      <h1>Join organization</h1>
-      <form className="stack-form">
-        <label>
-          Invite code
-          <input type="text" placeholder="ORG-ABC123" />
-        </label>
-        <label>
-          Your name
-          <input type="text" placeholder="Sam Patel" />
-        </label>
-        <label>
-          Email
-          <input type="email" placeholder="sam@org.example" />
-        </label>
-        <label>
-          Password
-          <input type="password" placeholder="••••••••" />
-        </label>
-        <button className="primary-button" type="submit">Join organization</button>
-      </form>
-    </section>
-  );
-}
-
-function LoginPage() {
-  return (
-    <section className="panel form-panel">
-      <h1>Login</h1>
-      <form className="stack-form">
-        <label>
-          Email
-          <input type="email" placeholder="you@example.org" />
-        </label>
-        <label>
-          Password
-          <input type="password" placeholder="••••••••" />
-        </label>
-        <button className="primary-button" type="submit">Sign in</button>
-      </form>
-    </section>
-  );
-}
-
-function AdminSettingsPage() {
-  return (
-    <section className="panel">
-      <div className="section-header">
+      <div className="create-org-card">
         <div>
-          <p className="eyebrow">Administration</p>
-          <h1>Admin settings</h1>
+          <p className="eyebrow">Setup</p>
+          <h2>Create organization</h2>
         </div>
-        <button className="secondary-button" type="button">Regenerate invite</button>
+        <button className="primary-button" type="button">Create new organization</button>
       </div>
+    </section>
+  );
+}
 
-      <div className="settings-grid">
-        <div className="mini-panel">
-          <h2>Regions</h2>
-          <ul>
-            <li>North</li>
-            <li>Central</li>
-            <li>Coastal</li>
-          </ul>
+function AuthPage() {
+  return (
+    <section className="panel form-panel auth-card">
+      <div className="auth-layout">
+        <div className="auth-form-block">
+          <p className="eyebrow">Account</p>
+          <h1>Sign up</h1>
+          <form className="stack-form">
+            <label>
+              Full name
+              <input type="text" placeholder="Ada Johnson" />
+            </label>
+            <label>
+              Email address
+              <input type="email" placeholder="ada@org.example" />
+            </label>
+            <label>
+              Password
+              <input type="password" placeholder="••••••••" />
+            </label>
+            <button className="primary-button" type="submit">Create account</button>
+          </form>
         </div>
-        <div className="mini-panel">
-          <h2>Branches</h2>
-          <ul>
-            <li>Aster Branch</li>
-            <li>Harbor Branch</li>
-            <li>Summit Branch</li>
-          </ul>
-        </div>
-        <div className="mini-panel">
-          <h2>Event types</h2>
-          <ul>
-            <li>Workshop</li>
-            <li>Community Gathering</li>
-            <li>Planning Meeting</li>
-          </ul>
+
+        <div className="auth-side-panel">
+          <p className="eyebrow">Welcome back</p>
+          <h2>Already have an account?</h2>
+          <p>Sign in to continue managing your organization events and visibility.</p>
+          <form className="stack-form compact-form">
+            <label>
+              Email
+              <input type="email" placeholder="you@example.org" />
+            </label>
+            <label>
+              Password
+              <input type="password" placeholder="••••••••" />
+            </label>
+            <button className="secondary-button" type="submit">Sign in</button>
+          </form>
         </div>
       </div>
     </section>
