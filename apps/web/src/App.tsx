@@ -75,72 +75,87 @@ function App() {
 
 function DashboardPage() {
   return (
-    <section className="panel dashboard-panel">
-      <div className="dashboard-hero">
-        <div className="hero-copy">
-          <p className="eyebrow">Active organization</p>
-          <h1>{organizationMeta.name}</h1>
-          <p className="hero-subtitle">Program visibility and branch activity across all regions.</p>
-        </div>
-        <div className="hero-badge-wrap" aria-label="Organization emblem">
-          <div className="hero-badge">NRN</div>
-        </div>
-      </div>
-
-      <div className="dashboard-layout">
-        <div className="calendar-panel card-panel">
-          <div className="panel-head">
-            <Link to="/calendar" className="panel-title-link">Calendar</Link>
-            <button className="primary-button small-button" type="button">+ Add Program</button>
+    <div className="dashboard-page">
+      <section className="hero-section">
+        <div className="hero-container">
+          <div className="hero-content">
+            <p className="eyebrow">Active Organization</p>
+            <h1>{organizationMeta.name}</h1>
+            <p className="hero-subtitle">Program visibility and branch activity across all regions.</p>
+            <div className="hero-cta">
+              <button className="primary-button" type="button">+ Add Program</button>
+            </div>
           </div>
+          <div className="hero-badge-wrap" aria-label="Organization emblem">
+            <div className="hero-badge">NRN</div>
+          </div>
+        </div>
+      </section>
 
-          <div className="calendar-grid" aria-label="August calendar">
-            {calendarDays.map((day, index) => (
-              <div key={`day-${index}`} className={`calendar-cell ${day === 14 || day === 20 || day === 28 ? 'is-event' : ''} ${day === 14 ? 'selected' : ''}`}>
-                {day ?? ''}
-              </div>
+      <div className="dashboard-content">
+        <section className="content-section">
+          <div className="section-head">
+            <h2>Overview</h2>
+            <Link to="/calendar" className="section-link">View Calendar →</Link>
+          </div>
+          <div className="dashboard-grid">
+            <div className="stat-card">
+              <span className="stat-label">Active Programs</span>
+              <strong className="stat-value">4</strong>
+            </div>
+            <div className="stat-card">
+              <span className="stat-label">Regions</span>
+              <strong className="stat-value">4</strong>
+            </div>
+            <div className="stat-card">
+              <span className="stat-label">Upcoming Events</span>
+              <strong className="stat-value">7</strong>
+            </div>
+            <div className="stat-card">
+              <span className="stat-label">Teams Involved</span>
+              <strong className="stat-value">18</strong>
+            </div>
+          </div>
+        </section>
+
+        <section className="content-section">
+          <div className="section-head">
+            <h2>Recent Programs</h2>
+            <Link to="/programs" className="section-link">View All →</Link>
+          </div>
+          <div className="programs-grid">
+            {recentPrograms.map((program) => (
+              <article key={program.name} className="program-card">
+                <div className="program-header">
+                  <span className="program-tag">{program.region}</span>
+                  <span className={`program-status ${program.status.toLowerCase().replace(' ', '-')}`}>
+                    {program.status}
+                  </span>
+                </div>
+                <h3>{program.name}</h3>
+              </article>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="side-stack">
-          <div className="card-panel">
-            <div className="panel-head">
-              <Link to="/programs" className="panel-title-link">Recent Programs</Link>
-              <button className="secondary-button small-button" type="button">+ Add Program</button>
-            </div>
-            <ul className="list-stack">
-              {recentPrograms.map((program) => (
-                <li key={program.name}>
-                  <div className="list-tag navy">{program.region}</div>
-                  <div>
-                    <strong>{program.name}</strong>
-                    <small>{program.status}</small>
-                  </div>
-                </li>
-              ))}
-            </ul>
+        <section className="content-section">
+          <div className="section-head">
+            <h2>Upcoming Events</h2>
           </div>
-
-          <div className="card-panel">
-            <div className="panel-head">
-              <h2>Upcoming Programs</h2>
-            </div>
-            <ul className="list-stack compact-list">
-              {upcomingPrograms.map((program) => (
-                <li key={program.name}>
-                  <div className="list-tag blue">{program.region}</div>
-                  <div>
-                    <strong>{program.name}</strong>
-                    <small>{program.date}</small>
-                  </div>
-                </li>
-              ))}
-            </ul>
+          <div className="events-list">
+            {upcomingPrograms.map((program) => (
+              <article key={program.name} className="event-row">
+                <div className="event-info">
+                  <h3>{program.name}</h3>
+                  <span className="event-date">{program.date}</span>
+                </div>
+                <span className="region-tag">{program.region}</span>
+              </article>
+            ))}
           </div>
-        </div>
+        </section>
       </div>
-    </section>
+    </div>
   );
 }
 
